@@ -1,15 +1,16 @@
 {
 	"info": {
-		"_postman_id": "1dc4b51f-b503-4089-b409-087474dd67d2",
+		"_postman_id": "78cd9d5b-2613-4c48-ad26-1b0507c61aaa",
 		"name": "Authentication Examples",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3965379"
 	},
 	"item": [
 		{
 			"name": "Basic",
 			"item": [
 				{
-					"name": "Get Access Token (Bearer token)",
+					"name": "Option 1: Get Access Token with credentials assigned as Authorization header (base64 encoded)",
 					"event": [
 						{
 							"listen": "test",
@@ -20,7 +21,76 @@
 									"console.log(jsonData.access_token)\r",
 									"pm.globals.set(\"accessToken\", jsonData.access_token);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let clientId = pm.environment.get(\"clientId\");\r",
+									"let clientSecret = pm.environment.get(\"clientSecret\");\r",
+									"\r",
+									"const encodedString = Buffer.from(clientId + \":\" + clientSecret).toString('base64');\r",
+									"\r",
+									"pm.collectionVariables.set(\"encodedCredentials\", encodedString);\r",
+									"\r",
+									"console.log(\"Base64 Encoded Token:\", encodedString);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{encodedCredentials}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "grant_type=client_credentials&scope=transpaapi:api&tenant_id={{tenantId}}"
+						},
+						"url": {
+							"raw": "https://connect.visma.com/connect/token",
+							"protocol": "https",
+							"host": [
+								"connect",
+								"visma",
+								"com"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Option 2: Get Access Token with credentials assigned in the request body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"console.log(jsonData)\r",
+									"console.log(jsonData.access_token)\r",
+									"pm.globals.set(\"accessToken\", jsonData.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
@@ -29,7 +99,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -66,9 +137,15 @@
 					"name": "Alive call - verifies general access to the API",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "https://api.mytranspa.com/publicApi/v1/alive?Authorization=Bearer {{accessToken}}",
+							"raw": "https://api.mytranspa.com/publicApi/v1/alive",
 							"protocol": "https",
 							"host": [
 								"api",
@@ -79,12 +156,6 @@
 								"publicApi",
 								"v1",
 								"alive"
-							],
-							"query": [
-								{
-									"key": "Authorization",
-									"value": "Bearer {{accessToken}}"
-								}
 							]
 						}
 					},
@@ -107,7 +178,8 @@
 									"console.log(jsonData.access_token)\r",
 									"pm.globals.set(\"accessTokenWithVehicleScope\", jsonData.access_token);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -152,7 +224,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer {{accessToken}}",
+								"value": "Bearer {{accessTokenWithVehicleScope}}",
 								"type": "text"
 							}
 						],
@@ -174,6 +246,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "encodedCredentials",
+			"value": ""
 		}
 	]
 }
