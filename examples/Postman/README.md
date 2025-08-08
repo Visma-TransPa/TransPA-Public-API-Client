@@ -7,14 +7,16 @@ In this folder you will find a Postman Collection the exemplifies the Authentica
 You will need the client id and secret for you application that you've set up inside the [Developer portal](https://oauth.developers.visma.com/). Inside the portal there is a documentation tab where should be able to find all the information you need. A pointer is to read this section about [Service Application](https://oauth.developers.visma.com/service-registry/documentation/authentication#serviceApp) since our API currently only supports Machine-to-Machine integrations.
 
 Also you need to have been granted access to the Sandbox tenant.
-Today this is a manual procerdure, that will be automated in the future.
+Today this is a manual procedure, that will be automated in the future.
 
 ### The collection
 The Collection consits of two folders: 
 
 #### Basic
-- Authenticates and only authorizes for transpaapi:api scope which is required for any access to the API.
-- Reads the Alive call
+There are 3 requests in this folder. The first two are variants for how to retrieve the accesstoken that you will later need to make the alive call.
+- Option 1: Get Access Token with credentials assigned as Authorization header (base64 encoded). This option base64 encoding the clientId and clientSecret together with a : in between and allows you to only add 1 environment variable system.
+- Option 2: Get Access Token with credentials assigned in the request body. Adds the clientId and clientSecret directly to the request body.
+- Reads the Alive call by using the access token that was set previously.
 
 #### Example - Vehicle Resource
 - Authenticates and authorizes for the scopes transpaapi:api and transpaapi:vehicles:read

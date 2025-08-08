@@ -19,7 +19,7 @@
 									"var jsonData = JSON.parse(responseBody);\r",
 									"console.log(jsonData)\r",
 									"console.log(jsonData.access_token)\r",
-									"pm.globals.set(\"accessToken\", jsonData.access_token);"
+									"pm.environment.set(\"accessToken\", jsonData.access_token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -87,7 +87,7 @@
 									"var jsonData = JSON.parse(responseBody);\r",
 									"console.log(jsonData)\r",
 									"console.log(jsonData.access_token)\r",
-									"pm.globals.set(\"accessToken\", jsonData.access_token);"
+									"pm.environment.set(\"accessToken\", jsonData.access_token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -176,7 +176,24 @@
 									"var jsonData = JSON.parse(responseBody);\r",
 									"console.log(jsonData)\r",
 									"console.log(jsonData.access_token)\r",
-									"pm.globals.set(\"accessTokenWithVehicleScope\", jsonData.access_token);"
+									"pm.environment.set(\"accessTokenWithVehicleScope\", jsonData.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let clientId = pm.environment.get(\"clientId\");\r",
+									"let clientSecret = pm.environment.get(\"clientSecret\");\r",
+									"\r",
+									"const encodedString = Buffer.from(clientId + \":\" + clientSecret).toString('base64');\r",
+									"\r",
+									"pm.collectionVariables.set(\"encodedCredentials\", encodedString);\r",
+									"\r",
+									"console.log(\"Base64 Encoded Token:\", encodedString);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -190,11 +207,16 @@
 								"key": "Content-Type",
 								"value": "application/x-www-form-urlencoded",
 								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{encodedCredentials}}",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "client_id={{clientId}}&client_secret={{clientSecret}}&grant_type=client_credentials&scope=transpaapi:api+transpaapi:vehicles:read&tenant_id={{tenantId}}",
+							"raw": "grant_type=client_credentials&scope=transpaapi:api+transpaapi:vehicles:read&tenant_id={{tenantId}}",
 							"options": {
 								"raw": {
 									"language": "text"
@@ -251,6 +273,10 @@
 	"variable": [
 		{
 			"key": "encodedCredentials",
+			"value": ""
+		},
+		{
+			"key": "accessToken",
 			"value": ""
 		}
 	]
