@@ -29,16 +29,22 @@ In the example the environment file is pre-filled with the Sandbox tenant, so al
 ## Standard Query Example
 In this folder you will find a Postman Collection that gives examples on how to use some of our different standard queries in the TransPA Public API.
 
+### Cursor
+This folder exemplifies how cursor works. Cursors are used to get the next page of the collection. When you read a collection and it doesn't fit within the limit the next cursor will be present in the request body named nextToken. The nextToken is then added as a query parameter in the next request. Keep in mind than any other query paramters from the original request should be passed along as well.
+```
+?cursor={nextToken}
+```
+
 ### Filter
 The filter feature allows you to write custom queries. The simplest query is just the choosen field followed by comparator and value. That is:
 
 ```
-{field}{comparator}{value} => E.g., id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0
+?filter={field}{comparator}{value} => E.g., id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0
 ```
 
 If you want to include operator you append them at the end like this:
 ```
-{field}{comparator}{value} => E.g., id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0$and:status$eq:approved
+?filter={field}{comparator}{value} => E.g., id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0$and:status$eq:approved
 ```
 
 #### Comparators
