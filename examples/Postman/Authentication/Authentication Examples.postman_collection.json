@@ -10,7 +10,7 @@
 			"name": "Basic",
 			"item": [
 				{
-					"name": "Option 1: Get Access Token with credentials assigned as Authorization header (base64 encoded)",
+					"name": "Option 1: Get Access Token (Authorization header)",
 					"event": [
 						{
 							"listen": "test",
@@ -78,7 +78,7 @@
 					"response": []
 				},
 				{
-					"name": "Option 2: Get Access Token with credentials assigned in the request body",
+					"name": "Option 2: Get Access Token (Request Body)",
 					"event": [
 						{
 							"listen": "test",
@@ -134,7 +134,7 @@
 					"response": []
 				},
 				{
-					"name": "Alive call - verifies general access to the API",
+					"name": "Alive Check",
 					"request": {
 						"method": "GET",
 						"header": [
