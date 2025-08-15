@@ -58,7 +58,7 @@ The following comparators are supported.
 | Comparator | Name                   |
 | :-------   | -------:               |
 | $eq:       | Equals                 |
-| $neq:      | Not equals             |
+| $ne:       | Not equals             |
 | $gt:       | Greater than           |
 | $gte:      | Greater than or equals |
 | $lt:       | Less than              |
