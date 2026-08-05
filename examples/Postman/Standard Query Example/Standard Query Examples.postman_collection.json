@@ -257,6 +257,79 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "List matching",
+									"item": [
+										{
+											"name": "In - Get trips with multiple statuses",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{accessTokenWithVehicleScope}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "https://api.mytranspa.com/publicApi/v1/trips?filter=status$in:approved,pending,submitted",
+													"protocol": "https",
+													"host": [
+														"api",
+														"mytranspa",
+														"com"
+													],
+													"path": [
+														"publicApi",
+														"v1",
+														"trips"
+													],
+													"query": [
+														{
+															"key": "filter",
+															"value": "status$in:approved,pending,submitted"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Not in - Get trips excluding certain statuses",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{accessTokenWithVehicleScope}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "https://api.mytranspa.com/publicApi/v1/trips?filter=status$nin:cancelled,rejected",
+													"protocol": "https",
+													"host": [
+														"api",
+														"mytranspa",
+														"com"
+													],
+													"path": [
+														"publicApi",
+														"v1",
+														"trips"
+													],
+													"query": [
+														{
+															"key": "filter",
+															"value": "status$nin:cancelled,rejected"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
 								}
 							]
 						}
