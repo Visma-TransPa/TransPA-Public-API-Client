@@ -76,8 +76,6 @@ The following comparators are supported.
 | $in:       | In                     |
 | $nin:      | Not in                 |
 
-
-
 #### Operators
 The following logical operators are supported for combining conditions.
 
