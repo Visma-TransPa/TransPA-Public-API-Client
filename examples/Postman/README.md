@@ -52,14 +52,14 @@ To combine multiple filter conditions, append a logical operator and the next co
 // Example: ?filter=id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0$and:status$eq:approved
 ```
 
-For matching against multiple values, use the `in` comparator to match any value in a comma-separated list, or `nin` to exclude values from a comma-separated list.
+For matching against multiple values, use the `in` comparator to match any value in a comma-separated list wrapped in `[]`, or `nin` to exclude values from a comma-separated list wrapped in `[]`.
 
 ```
-// Using in - match any value in the list
-?filter=status$in:active,pending,approved
+?filter={field}$in:[{value},{value}]
+// Example: ?filter=employeeId$in:[07e9b5d1-83f0-489c-81c5-64427aa959e0,b1df383d-23f5-4aa3-118c-bbb551abfd9d]
 
-// Using nin - exclude values in the list
-?filter=status$nin:cancelled,rejected
+?filter={field}$nin:[{value},{value}]
+// Example: ?filter=employeeId$nin:[07e9b5d1-83f0-489c-81c5-64427aa959e0,b1df383d-23f5-4aa3-118c-bbb551abfd9d]
 ```
 
 #### Comparators
