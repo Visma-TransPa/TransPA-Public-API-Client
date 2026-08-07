@@ -52,6 +52,16 @@ To combine multiple filter conditions, append a logical operator and the next co
 // Example: ?filter=id$eq:07e9b5d1-83f0-489c-81c5-64427aa959e0$and:status$eq:approved
 ```
 
+For matching against multiple values, use the `in` comparator to match any value in a comma-separated list wrapped in `[]`, or `nin` to exclude values from a comma-separated list wrapped in `[]`.
+
+```
+?filter={field}$in:[{value},{value}]
+// Example: ?filter=employeeId$in:[07e9b5d1-83f0-489c-81c5-64427aa959e0,b1df383d-23f5-4aa3-118c-bbb551abfd9d]
+
+?filter={field}$nin:[{value},{value}]
+// Example: ?filter=employeeId$nin:[07e9b5d1-83f0-489c-81c5-64427aa959e0,b1df383d-23f5-4aa3-118c-bbb551abfd9d]
+```
+
 #### Comparators
 The following comparators are supported.
 
@@ -63,6 +73,8 @@ The following comparators are supported.
 | $gte:      | Greater than or equals |
 | $lt:       | Less than              |
 | $lte:      | Less than or equals    |
+| $in:       | In                     |
+| $nin:      | Not in                 |
 
 #### Operators
 The following logical operators are supported for combining conditions.
